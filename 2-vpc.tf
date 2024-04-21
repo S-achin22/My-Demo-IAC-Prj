@@ -15,9 +15,10 @@ module "vpc" {
   private_subnets = ["10.0.0.0/20", "10.0.16.0/20", "10.0.32.0/20"]
   public_subnets  = ["10.0.96.0/20", "10.0.112.0/20", "10.0.128.0/20"]
 
-  map_public_ip_on_launch = true
-  enable_nat_gateway      = false
-
+  map_public_ip_on_launch = true   #Whether to assign public IPs to instances launched in public subnets.
+  enable_nat_gateway      = false  #create a NAT gateway for private subnets.
+  
+  #https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html  
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster-name}" = "shared"
     "kubernetes.io/role/elb"                    = "1"
@@ -44,6 +45,7 @@ output "subnet_id-pub" {
   value = module.vpc.public_subnets
 }
 
+#The local block defines local values that can be referenced elsewhere in the configuration.
 locals {
   private_subnets = [
     for subnet in module.vpc.private_subnets : subnet
