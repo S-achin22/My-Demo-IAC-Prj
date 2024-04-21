@@ -133,7 +133,7 @@ resource "kubernetes_ingress" "app-ingress" {
 
   spec {
     rule {
-      host = "microservice1.example.com"
+      host = "microservice.example.com"
       http {
         path {
           path = "/microservice1"
