@@ -23,17 +23,20 @@ terraform {
   }
 }
 
+
 provider "aws" {
   #region = var.region
   region = "us-west-2"
 }
 
+#It specifies the Kubernetes cluster's endpoint, authentication token, and cluster CA certificate. These are necessary for Terraform to interact with the Kubernetes cluster.
 provider "kubernetes" {
   host                   = aws_eks_cluster.cluster.endpoint
   token                  = data.aws_eks_cluster_auth.auth.token
   cluster_ca_certificate = base64decode(aws_eks_cluster.cluster.certificate_authority.0.data)
 }
 
+#This block retrieves information about available AWS availability zones in the specified region ("us-west-2") and stores it in a data source named "az".
 data "aws_availability_zones" "az" {
   state = "available"
 }
