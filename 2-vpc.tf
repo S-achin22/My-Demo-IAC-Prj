@@ -45,14 +45,3 @@ output "subnet_id-pub" {
   value = module.vpc.public_subnets
 }
 
-#The local block defines local values that can be referenced elsewhere in the configuration.
-locals {
-  private_subnets = [
-    for subnet in module.vpc.private_subnets : subnet
-  ]
-  public_subnets = [
-    for subnet in module.vpc.public_subnets : subnet
-  ]
-
-  depends_on = [module.vpc.private_subnets, module.vpc.public_subnets]
-}
