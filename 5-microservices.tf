@@ -60,7 +60,7 @@ resource "kubernetes_service" "microservice1" {
 
     port {
       port        = 80
-      target_port = 8080
+      target_port = 8081
     }
     # Define type as "ClusterIP", "NodePort", or "LoadBalancer" depending on your needs
     type = "Loadbalancer"
